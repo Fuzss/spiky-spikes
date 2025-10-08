@@ -1,7 +1,0 @@
-{
-    "fabric:type": "spikyspikes:builtin/spike",
-    "loader": "spikyspikes:builtin/spike",
-    "parent": "block/block",
-    "ambientocclusion": false,
-    "gui_light": "front"
-}
