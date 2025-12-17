@@ -101,7 +101,7 @@ public final class FakePlayerAttackHelper {
             entity.setDeltaMovement(deltaMovement.x / 2.0 + knockbackVec.x,
                     Math.min(0.4, deltaMovement.y / 2.0 + knockbackVec.y),
                     deltaMovement.z / 2.0 + knockbackVec.z);
-            entity.hasImpulse = true;
+            entity.needsSync = true;
         }
     }
 

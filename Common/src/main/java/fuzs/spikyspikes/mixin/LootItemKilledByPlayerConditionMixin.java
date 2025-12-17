@@ -19,10 +19,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(LootItemKilledByPlayerCondition.class)
 abstract class LootItemKilledByPlayerConditionMixin {
 
-    @Inject(method = "test", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "test(Lnet/minecraft/world/level/storage/loot/LootContext;)Z",
+            at = @At("HEAD"),
+            cancellable = true)
     public void test(LootContext context, CallbackInfoReturnable<Boolean> callback) {
-        if (context.getOptionalParameter(LootContextParams.DAMAGE_SOURCE) instanceof SpikeDamageSource spikeDamageSource &&
-                spikeDamageSource.dropPlayerLoot()) {
+        if (context.getOptionalParameter(LootContextParams.DAMAGE_SOURCE) instanceof SpikeDamageSource spikeDamageSource
+                && spikeDamageSource.dropPlayerLoot()) {
             callback.setReturnValue(true);
         }
     }

@@ -9,7 +9,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.PathType;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class NeoForgeSpikeBlock extends SpikeBlock {
     public static final MapCodec<SpikeBlock> CODEC = spikeCodec(NeoForgeSpikeBlock::new);

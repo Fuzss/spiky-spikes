@@ -1,0 +1,61 @@
+{
+    "mod": {
+        "id": "spikyspikes",
+        "group": "fuzs.spikyspikes",
+        "name": "Spiky Spikes",
+        "version": "21.11.0",
+        "authors": [
+            "Fuzs"
+        ],
+        "description": "Don't step on it! Hurts almost as much as stepping on LEGO haha...",
+        "license": "MPL-2.0"
+    },
+    "dependencies": [
+        {
+            "name": "fabricapi",
+            "type": "required",
+            "platforms": [
+                "fabric"
+            ]
+        },
+        {
+            "name": "forgeconfigapiport",
+            "type": "required",
+            "platforms": [
+                "fabric"
+            ]
+        },
+        {
+            "name": "puzzleslib",
+            "type": "required",
+            "platforms": [
+                "fabric",
+                "neoforge"
+            ]
+        }
+    ],
+    "links": [
+        {
+            "name": "github",
+            "slug": "spikyspikes"
+        },
+        {
+            "name": "curseforge",
+            "slug": "spiky-spikes",
+            "id": "666944"
+        },
+        {
+            "name": "modrinth",
+            "slug": "spiky-spikes",
+            "id": "DUaLBLVL"
+        }
+    ],
+    "environments": {
+        "client": "required",
+        "server": "required"
+    },
+    "platforms": [
+        "fabric",
+        "neoforge"
+    ]
+}

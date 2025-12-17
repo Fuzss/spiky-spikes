@@ -23,7 +23,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
-import net.minecraft.world.level.*;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -31,6 +34,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.pathfinder.PathComputationType;
@@ -38,7 +42,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -263,18 +267,18 @@ public class SpikeBlock extends BaseEntityBlock implements SimpleWaterloggedBloc
                         }
                     } else {
                         // cancelling drops via forge event works too, but also cancels equipment drops (e.g. saddles, not spawned equipment) which is not good
-                        boolean doMobLoot = serverLevel.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT);
+                        boolean doMobLoot = serverLevel.getGameRules().get(GameRules.MOB_DROPS);
                         if (!this.spikeMaterial.dropsMobLoot()) {
-                            serverLevel.getGameRules().getRule(GameRules.RULE_DOMOBLOOT).set(false, level.getServer());
+                            serverLevel.getGameRules().set(GameRules.MOB_DROPS, Boolean.FALSE, level.getServer());
                         }
+
                         livingEntity.hurtServer(serverLevel,
                                 SpikeDamageSource.source(ModRegistry.SPIKE_DAMAGE_TYPE, level, blockPos),
                                 this.spikeMaterial.damageAmount());
                         if (!this.spikeMaterial.dropsMobLoot()) {
-                            serverLevel.getGameRules()
-                                    .getRule(GameRules.RULE_DOMOBLOOT)
-                                    .set(doMobLoot, level.getServer());
+                            serverLevel.getGameRules().set(GameRules.MOB_DROPS, doMobLoot, level.getServer());
                         }
+
                         // similar to zombified piglins, so we don't have to use a fake player just to get xp
                         if (!livingEntity.isAlive() && this.spikeMaterial.dropsExperience()) {
                             livingEntity.setLastHurtByPlayer((EntityReference<Player>) null, 100);

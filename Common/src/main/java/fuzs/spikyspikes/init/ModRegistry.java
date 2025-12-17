@@ -91,8 +91,10 @@ public class ModRegistry {
                     DIAMOND_SPIKE_BLOCK.value(),
                     NETHERITE_SPIKE_BLOCK.value()));
     public static final ResourceKey<DamageType> SPIKE_DAMAGE_TYPE = REGISTRIES.registerDamageType("spike");
-    static final TagFactory TAGS = TagFactory.make(SpikySpikes.MOD_ID);
 
+    static final TagFactory TAGS = TagFactory.make(SpikySpikes.MOD_ID);
+    public static final TagKey<Item> SPIKES_ITEM_TAG = TAGS.registerItemTag("spikes");
+    public static final TagKey<Item> ENCHANTABLE_SPIKES_ITEM_TAG = TAGS.registerItemTag("enchantable_spikes");
     public static final TagKey<EntityType<?>> SPIKE_DAMAGE_IMMUNE_ENTITY_TYPE_TAG = TAGS.registerEntityTypeTag(
             "spike_damage_immune");
 

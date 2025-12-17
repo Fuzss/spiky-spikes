@@ -1,20 +1,22 @@
 package fuzs.spikyspikes.client.renderer.block.model;
 
 import com.mojang.math.Quadrant;
-import fuzs.puzzleslib.api.client.renderer.v1.model.QuadUtils;
+import fuzs.puzzleslib.api.client.renderer.v1.model.MutableBakedQuad;
 import fuzs.spikyspikes.SpikySpikes;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
-import net.minecraft.Util;
+import net.minecraft.client.model.geom.builders.UVPair;
 import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.*;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.util.Util;
 import org.joml.Vector3f;
+import org.joml.Vector3fc;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.EnumMap;
@@ -25,7 +27,7 @@ import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
 public class SpikeModelGenerator implements UnbakedModel {
-    public static final ResourceLocation BUILTIN_SPIKE_MODEL = SpikySpikes.id("builtin/spike");
+    public static final Identifier BUILTIN_SPIKE_MODEL = SpikySpikes.id("builtin/spike");
     /**
      * The upper face is only removed after baking and will log a missing texture warning if not present.
      */
@@ -56,7 +58,7 @@ public class SpikeModelGenerator implements UnbakedModel {
     public static QuadCollection bake(TextureSlots textureSlots, ModelBaker modelBaker, ModelState modelState, ModelDebugName modelDebugName) {
         QuadCollection quadCollection = SimpleUnbakedGeometry.bake(ELEMENTS,
                 textureSlots,
-                modelBaker.sprites(),
+                modelBaker,
                 modelState,
                 modelDebugName);
         return modifyBakedModel(quadCollection, modelState, SpikeModelGenerator::finalizeBakedQuad);
@@ -69,6 +71,7 @@ public class SpikeModelGenerator implements UnbakedModel {
         for (BakedQuad bakedQuad : quadCollection.getQuads(null)) {
             builder.addUnculledFace(bakedQuad);
         }
+
         Function<Direction, Direction> directionRotator = Util.memoize((Direction direction) -> {
             return Direction.rotate(modelState.transformation().getMatrix(), direction);
         });
@@ -85,35 +88,47 @@ public class SpikeModelGenerator implements UnbakedModel {
                         }
                     });
         }
+
         return builder.build();
     }
 
     private static void finalizeBakedQuad(Direction direction, BakedQuad bakedQuad, UnaryOperator<Direction> directionRotator, BiConsumer<@Nullable Direction, BakedQuad> bakedQuadConsumer) {
         if (direction != Direction.UP) {
-            bakedQuad = QuadUtils.copy(bakedQuad);
+            MutableBakedQuad mutableBakedQuad = MutableBakedQuad.toMutable(bakedQuad);
             if (direction.getAxis().isHorizontal()) {
                 int[] maxVertexIndices;
                 if (directionRotator.apply(Direction.UP).getAxisDirection() == Direction.UP.getAxisDirection()) {
-                    maxVertexIndices = getMaxVertexIndices(bakedQuad, directionRotator.apply(Direction.UP).getAxis());
+                    maxVertexIndices = getMaxVertexIndices(mutableBakedQuad,
+                            directionRotator.apply(Direction.UP).getAxis());
                 } else {
-                    maxVertexIndices = getMinVertexIndices(bakedQuad, directionRotator.apply(Direction.UP).getAxis());
+                    maxVertexIndices = getMinVertexIndices(mutableBakedQuad,
+                            directionRotator.apply(Direction.UP).getAxis());
                 }
+
                 for (int vertexIndex : maxVertexIndices) {
-                    setQuadPosition(bakedQuad, vertexIndex, directionRotator.apply(Direction.EAST).getAxis(), 0.5F);
-                    setQuadPosition(bakedQuad, vertexIndex, directionRotator.apply(Direction.SOUTH).getAxis(), 0.5F);
-                    float u0 = QuadUtils.getU(bakedQuad, maxVertexIndices[0]);
-                    float u1 = QuadUtils.getU(bakedQuad, maxVertexIndices[1]);
-                    QuadUtils.setU(bakedQuad, vertexIndex, Mth.lerp(0.5F, u0, u1));
+                    setQuadPosition(mutableBakedQuad,
+                            vertexIndex,
+                            directionRotator.apply(Direction.EAST).getAxis(),
+                            0.5F);
+                    setQuadPosition(mutableBakedQuad,
+                            vertexIndex,
+                            directionRotator.apply(Direction.SOUTH).getAxis(),
+                            0.5F);
+                    float u0 = UVPair.unpackU(mutableBakedQuad.packedUV(maxVertexIndices[0]));
+                    float u1 = UVPair.unpackU(mutableBakedQuad.packedUV(maxVertexIndices[1]));
+                    float v = UVPair.unpackV(mutableBakedQuad.packedUV(vertexIndex));
+                    mutableBakedQuad.packedUV(vertexIndex, UVPair.pack(Mth.lerp(0.5F, u0, u1), v));
                 }
-                QuadUtils.fillNormal(bakedQuad);
-                bakedQuadConsumer.accept(null, bakedQuad);
+
+                mutableBakedQuad.computeQuadNormals();
+                bakedQuadConsumer.accept(null, mutableBakedQuad.toImmutable());
             } else {
-                bakedQuadConsumer.accept(directionRotator.apply(direction), bakedQuad);
+                bakedQuadConsumer.accept(directionRotator.apply(direction), mutableBakedQuad.toImmutable());
             }
         }
     }
 
-    public static int[] getMaxVertexIndices(BakedQuad bakedQuad, Direction.Axis axis) {
+    public static int[] getMaxVertexIndices(MutableBakedQuad bakedQuad, Direction.Axis axis) {
         IntList maxVertexIndices = new IntArrayList();
         float maxValue = Float.MIN_VALUE;
         for (int i = 0; i < 4; i++) {
@@ -122,14 +137,16 @@ public class SpikeModelGenerator implements UnbakedModel {
                 maxVertexIndices.clear();
                 maxValue = positionComponent;
             }
+
             if (positionComponent == maxValue) {
                 maxVertexIndices.add(i);
             }
         }
+
         return maxVertexIndices.toIntArray();
     }
 
-    public static int[] getMinVertexIndices(BakedQuad bakedQuad, Direction.Axis axis) {
+    public static int[] getMinVertexIndices(MutableBakedQuad bakedQuad, Direction.Axis axis) {
         IntList minVertexIndices = new IntArrayList();
         float minValue = Float.MAX_VALUE;
         for (int i = 0; i < 4; i++) {
@@ -138,27 +155,31 @@ public class SpikeModelGenerator implements UnbakedModel {
                 minVertexIndices.clear();
                 minValue = positionComponent;
             }
+
             if (positionComponent == minValue) {
                 minVertexIndices.add(i);
             }
         }
+
         return minVertexIndices.toIntArray();
     }
 
-    public static float getQuadPosition(BakedQuad bakedQuad, int vertexIndex, Direction.Axis axis) {
-        Vector3f vector3f = QuadUtils.getPosition(bakedQuad, vertexIndex);
-        return (float) axis.choose(vector3f.x(), vector3f.y(), vector3f.z());
+    public static float getQuadPosition(MutableBakedQuad bakedQuad, int vertexIndex, Direction.Axis axis) {
+        Vector3fc vector3fc = bakedQuad.position(vertexIndex);
+        return (float) axis.choose(vector3fc.x(), vector3fc.y(), vector3fc.z());
     }
 
-    public static void setQuadPosition(BakedQuad bakedQuad, int vertexIndex, Direction.Axis axis, float positionComponent) {
-        Vector3f vector3f = QuadUtils.getPosition(bakedQuad, vertexIndex);
-        vector3f.sub(vector3f.mul(axis.getPositive().step(), new Vector3f()));
-        QuadUtils.setPosition(bakedQuad, vertexIndex, vector3f.add(axis.getPositive().step().mul(positionComponent)));
+    public static void setQuadPosition(MutableBakedQuad bakedQuad, int vertexIndex, Direction.Axis axis, float positionComponent) {
+        Vector3fc inputVector = bakedQuad.position(vertexIndex);
+        Vector3f outputVector = new Vector3f();
+        inputVector.mul(axis.getPositive().step(), outputVector);
+        inputVector.sub(outputVector, outputVector);
+        outputVector.add(axis.getPositive().step().mul(positionComponent));
+        bakedQuad.position(vertexIndex, outputVector);
     }
 
     @FunctionalInterface
     public interface BakedQuadFinalizer {
-
         void finalizeBakedQuad(Direction direction, BakedQuad bakedQuad, UnaryOperator<Direction> directionRotator, BiConsumer<@Nullable Direction, BakedQuad> bakedQuadConsumer);
     }
 }

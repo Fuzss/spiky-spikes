@@ -7,10 +7,7 @@ import fuzs.spikyspikes.neoforge.world.level.block.NeoForgeSpikeBlock;
 import fuzs.spikyspikes.world.level.block.SpikeMaterial;
 import net.minecraft.core.Holder;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.MapColor;
-import net.minecraft.world.level.material.PushReaction;
 
 public class NeoForgeModRegistry {
     static final RegistryManager REGISTRIES = RegistryManager.from(SpikySpikes.MOD_ID);
