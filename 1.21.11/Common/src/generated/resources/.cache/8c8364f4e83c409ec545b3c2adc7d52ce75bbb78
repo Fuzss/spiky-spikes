@@ -1,3 +1,8 @@
-// 1.21.10	2025-10-08T22:58:51.133451	Tags for minecraft:item mod id vanilla
-ce390b7a923769cf8fd077a341379e2788bc6c4a data/minecraft/tags/item/enchantable/sharp_weapon.json
-ce390b7a923769cf8fd077a341379e2788bc6c4a data/minecraft/tags/item/enchantable/sword.json
+// 1.21.11	2025-12-17T22:50:45.158521	Tags for minecraft:item mod id vanilla
+58555d90433ae10bb3ab46be3bde24abf7dd4fe9 data/minecraft/tags/item/enchantable/fire_aspect.json
+58555d90433ae10bb3ab46be3bde24abf7dd4fe9 data/minecraft/tags/item/enchantable/melee_weapon.json
+58555d90433ae10bb3ab46be3bde24abf7dd4fe9 data/minecraft/tags/item/enchantable/sharp_weapon.json
+58555d90433ae10bb3ab46be3bde24abf7dd4fe9 data/minecraft/tags/item/enchantable/sweeping.json
+58555d90433ae10bb3ab46be3bde24abf7dd4fe9 data/minecraft/tags/item/enchantable/weapon.json
+ce390b7a923769cf8fd077a341379e2788bc6c4a data/spikyspikes/tags/item/enchantable_spikes.json
+bdb9d8ee7d92da8cc0c61d273862dec245ebef10 data/spikyspikes/tags/item/spikes.json

@@ -10,7 +10,7 @@ import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
@@ -42,22 +42,22 @@ public class ModModelProvider extends AbstractModelProvider {
     }
 
     public final void createSpikeBlock(Block spikeBlock, Block textureBlock, BlockModelGenerators blockModelGenerators) {
-        ResourceLocation resourceLocation = ModelLocationHelper.getBlockTexture(textureBlock);
-        this.createSpikeBlock(spikeBlock, resourceLocation, resourceLocation, blockModelGenerators);
+        Identifier identifier = ModelLocationHelper.getBlockTexture(textureBlock);
+        this.createSpikeBlock(spikeBlock, identifier, identifier, blockModelGenerators);
     }
 
-    public final void createSpikeBlock(Block spikeBlock, ResourceLocation textureLocation, ResourceLocation bottomTextureLocation, BlockModelGenerators blockModelGenerators) {
+    public final void createSpikeBlock(Block spikeBlock, Identifier textureLocation, Identifier bottomTextureLocation, BlockModelGenerators blockModelGenerators) {
         TextureMapping textureMapping = new TextureMapping().put(TextureSlot.PARTICLE, textureLocation)
                 .put(TextureSlot.DOWN, bottomTextureLocation)
                 .put(TextureSlot.NORTH, textureLocation)
                 .put(TextureSlot.SOUTH, textureLocation)
                 .put(TextureSlot.EAST, textureLocation)
                 .put(TextureSlot.WEST, textureLocation);
-        ResourceLocation resourceLocation = SPIKE_MODEL_TEMPLATE.create(spikeBlock,
+        Identifier identifier = SPIKE_MODEL_TEMPLATE.create(spikeBlock,
                 textureMapping,
                 blockModelGenerators.modelOutput);
         blockModelGenerators.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(spikeBlock,
-                        BlockModelGenerators.plainVariant(resourceLocation))
+                        BlockModelGenerators.plainVariant(identifier))
                 .with(BlockModelGenerators.ROTATIONS_COLUMN_WITH_FACING));
     }
 }
