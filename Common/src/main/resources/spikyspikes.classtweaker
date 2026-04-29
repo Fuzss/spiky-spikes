@@ -6,3 +6,7 @@ accessible	field	net/minecraft/client/renderer/block/BlockModelRenderState	trans
 accessible	field	net/minecraft/client/renderer/block/BlockModelRenderState	renderType	Lnet/minecraft/client/renderer/rendertype/RenderType;
 accessible	field	net/minecraft/client/renderer/block/BlockModelRenderState	tintLayers	Lit/unimi/dsi/fastutil/ints/IntList;
 accessible  method  net/minecraft/client/renderer/feature/BlockFeatureRenderer  putPartQuads    (Lnet/minecraft/client/renderer/block/dispatch/BlockStateModelPart;Lcom/mojang/blaze3d/vertex/PoseStack$Pose;Lcom/mojang/blaze3d/vertex/QuadInstance;[ILcom/mojang/blaze3d/vertex/VertexConsumer;Lcom/mojang/blaze3d/vertex/VertexConsumer;)V
+accessible	field	net/minecraft/client/renderer/block/model/BlockStateModelWrapper	model	Lnet/minecraft/client/renderer/block/dispatch/BlockStateModel;
+accessible	field	net/minecraft/client/renderer/block/model/BlockStateModelWrapper	tints	Ljava/util/List;
+accessible	field	net/minecraft/client/renderer/block/model/BlockStateModelWrapper	transformation	Lorg/joml/Matrix4fc;
+accessible	method	net/minecraft/client/renderer/block/model/BlockStateModelWrapper	updateTints	(Lnet/minecraft/client/renderer/block/BlockModelRenderState;Lnet/minecraft/world/level/block/state/BlockState;)V

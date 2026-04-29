@@ -7,17 +7,14 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import fuzs.spikyspikes.common.client.renderer.blockentity.state.SpikeRenderState;
 import fuzs.spikyspikes.common.world.level.block.EnchantmentGlintBlock;
 import fuzs.spikyspikes.common.world.level.block.entity.SpikeBlockEntity;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.OutlineBufferSource;
 import net.minecraft.client.renderer.SubmitNodeCollection;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.block.BlockModelRenderState;
 import net.minecraft.client.renderer.block.BlockModelResolver;
-import net.minecraft.client.renderer.block.dispatch.BlockStateModel;
 import net.minecraft.client.renderer.block.dispatch.BlockStateModelPart;
 import net.minecraft.client.renderer.block.model.BlockDisplayContext;
-import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.feature.BlockFeatureRenderer;
@@ -51,10 +48,6 @@ public class SpikeRenderer implements BlockEntityRenderer<SpikeBlockEntity, Spik
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTick, cameraPosition, crumblingOverlay);
         if (blockEntity.getBlockState().getBlock() instanceof EnchantmentGlintBlock block
                 && block.hasFoil(blockEntity.getBlockState())) {
-            BlockModel blockStateModel = Minecraft.getInstance()
-                    .getModelManager()
-                    .getBlockModelSet()
-                    .get(blockEntity.getBlockState());
             this.blockModelResolver.update(state.blockModel, blockEntity.getBlockState(), BLOCK_DISPLAY_CONTEXT);
         } else {
             state.blockModel.clear();
@@ -71,7 +64,7 @@ public class SpikeRenderer implements BlockEntityRenderer<SpikeBlockEntity, Spik
                     .submitCustomGeometry(poseStack,
                             state.blockModel.renderType,
                             (PoseStack.Pose pose, VertexConsumer vertexConsumer) -> {
-                                this.renderBlockModel(pose, vertexConsumer, state.blockModel, state.lightCoords);
+                                this.submitBlockModel(pose, vertexConsumer, state.blockModel, state.lightCoords);
                             });
             submitNodeCollector.order(2)
                     .submitCustomGeometry(poseStack,
@@ -80,7 +73,7 @@ public class SpikeRenderer implements BlockEntityRenderer<SpikeBlockEntity, Spik
                                 VertexConsumer buffer = new SheetedDecalTextureGenerator(vertexConsumer,
                                         pose,
                                         0.0078125F);
-                                this.renderBlockModel(pose, buffer, state.blockModel, state.lightCoords);
+                                this.submitBlockModel(pose, buffer, state.blockModel, state.lightCoords);
                             });
             if (state.breakProgress != null) {
                 submitNodeCollector.order(3)
@@ -90,7 +83,7 @@ public class SpikeRenderer implements BlockEntityRenderer<SpikeBlockEntity, Spik
                                     VertexConsumer buffer = new SheetedDecalTextureGenerator(vertexConsumer,
                                             state.breakProgress.cameraPose(),
                                             1.0F);
-                                    this.renderBlockModel(pose, buffer, state.blockModel, LightCoordsUtil.FULL_BRIGHT);
+                                    this.submitBlockModel(pose, buffer, state.blockModel, LightCoordsUtil.FULL_BRIGHT);
                                 });
             }
         }
@@ -101,7 +94,7 @@ public class SpikeRenderer implements BlockEntityRenderer<SpikeBlockEntity, Spik
      * @see BlockFeatureRenderer#renderBlockModelSubmits(SubmitNodeCollection, MultiBufferSource.BufferSource,
      *         OutlineBufferSource, boolean)
      */
-    private void renderBlockModel(PoseStack.Pose pose, VertexConsumer buffer, BlockModelRenderState blockModel, int lightCoords) {
+    private void submitBlockModel(PoseStack.Pose pose, VertexConsumer buffer, BlockModelRenderState blockModel, int lightCoords) {
         if (blockModel.modelParts != null && !blockModel.modelParts.isEmpty()) {
             int[] tints =
                     blockModel.tintLayers != null ? blockModel.tintLayers.toArray(BlockModelRenderState.EMPTY_TINTS) :
@@ -113,33 +106,6 @@ public class SpikeRenderer implements BlockEntityRenderer<SpikeBlockEntity, Spik
             }
         }
     }
-
-//    /**
-//     * @see ItemBlockRenderTypes#getRenderType(BlockState)
-//     */
-//    public static RenderType getBlockRenderType(BlockState blockState) {
-//        return getBlockRenderType(ItemBlockRenderTypes.getChunkRenderType(blockState));
-//    }
-//
-//    /**
-//     * @see ItemBlockRenderTypes#getRenderType(BlockState)
-//     */
-//    public static RenderType getBlockRenderType(ChunkSectionLayer chunkSectionLayer) {
-//        if (chunkSectionLayer == ChunkSectionLayer.TRANSLUCENT) {
-//            return Sheets.translucentBlockSheet();
-//        } else {
-//            return Sheets.cutoutBlockSheet();
-//        }
-//    }
-//
-//    public static RenderType getFoilRenderType(BlockState blockState) {
-//        return getFoilRenderType(getBlockRenderType(blockState));
-//    }
-//
-//    public static RenderType getFoilRenderType(RenderType renderType) {
-//        // just some quirky getter for avoiding the private vanilla method
-//        return ItemFeatureRenderer.getFoilRenderType(renderType, true);
-//    }
 
     @Override
     public int getViewDistance() {
