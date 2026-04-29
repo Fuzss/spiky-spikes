@@ -2,13 +2,13 @@ package fuzs.spikyspikes.neoforge;
 
 import fuzs.puzzleslib.common.api.core.v1.ModConstructor;
 import fuzs.puzzleslib.neoforge.api.data.v2.core.DataProviderHelper;
-import fuzs.spikyspikes.SpikySpikes;
-import fuzs.spikyspikes.data.loot.ModBlockLootProvider;
-import fuzs.spikyspikes.data.ModRecipeProvider;
-import fuzs.spikyspikes.data.tags.ModBlockTagProvider;
-import fuzs.spikyspikes.data.tags.ModEntityTypeTagProvider;
-import fuzs.spikyspikes.data.tags.ModItemTagProvider;
-import fuzs.spikyspikes.init.ModRegistry;
+import fuzs.spikyspikes.common.SpikySpikes;
+import fuzs.spikyspikes.common.data.loot.ModBlockLootProvider;
+import fuzs.spikyspikes.common.data.ModRecipeProvider;
+import fuzs.spikyspikes.common.data.tags.ModBlockTagProvider;
+import fuzs.spikyspikes.common.data.tags.ModEntityTypeTagProvider;
+import fuzs.spikyspikes.common.data.tags.ModItemTagProvider;
+import fuzs.spikyspikes.common.init.ModRegistry;
 import fuzs.spikyspikes.neoforge.init.NeoForgeModRegistry;
 import net.neoforged.fml.common.Mod;
 

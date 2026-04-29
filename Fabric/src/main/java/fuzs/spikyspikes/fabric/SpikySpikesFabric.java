@@ -1,8 +1,8 @@
 package fuzs.spikyspikes.fabric;
 
 import fuzs.puzzleslib.common.api.core.v1.ModConstructor;
-import fuzs.spikyspikes.SpikySpikes;
-import fuzs.spikyspikes.init.ModRegistry;
+import fuzs.spikyspikes.common.SpikySpikes;
+import fuzs.spikyspikes.common.init.ModRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.registry.LandPathTypeRegistry;
 import net.minecraft.world.level.pathfinder.PathType;

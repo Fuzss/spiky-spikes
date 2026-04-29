@@ -1,10 +1,10 @@
 package fuzs.spikyspikes.neoforge.init;
 
 import fuzs.puzzleslib.common.api.init.v3.registry.RegistryManager;
-import fuzs.spikyspikes.SpikySpikes;
-import fuzs.spikyspikes.init.ModRegistry;
+import fuzs.spikyspikes.common.SpikySpikes;
+import fuzs.spikyspikes.common.init.ModRegistry;
 import fuzs.spikyspikes.neoforge.world.level.block.NeoForgeSpikeBlock;
-import fuzs.spikyspikes.world.level.block.SpikeMaterial;
+import fuzs.spikyspikes.common.world.level.block.SpikeMaterial;
 import net.minecraft.core.Holder;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;

@@ -1,8 +1,8 @@
 package fuzs.spikyspikes.neoforge.world.level.block;
 
 import com.mojang.serialization.MapCodec;
-import fuzs.spikyspikes.world.level.block.SpikeBlock;
-import fuzs.spikyspikes.world.level.block.SpikeMaterial;
+import fuzs.spikyspikes.common.world.level.block.SpikeBlock;
+import fuzs.spikyspikes.common.world.level.block.SpikeMaterial;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.BlockGetter;

@@ -1,6 +1,7 @@
 package fuzs.spikyspikes.fabric.mixin.client;
 
-import fuzs.spikyspikes.world.level.block.SpikeBlock;
+import fuzs.spikyspikes.common.util.DestroyEffectsHelper;
+import fuzs.spikyspikes.common.world.level.block.SpikeBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
@@ -38,7 +39,7 @@ abstract class ClientLevelFabricMixin extends Level {
     @Inject(method = "addDestroyBlockEffect", at = @At("HEAD"), cancellable = true)
     public void addDestroyBlockEffect(BlockPos blockPos, BlockState blockState, CallbackInfo callback) {
         if (blockState.getBlock() instanceof SpikeBlock) {
-            if (fuzs.spikyspikes.util.DestroyEffectsHelper.addDestroyEffects(blockState,
+            if (DestroyEffectsHelper.addDestroyEffects(blockState,
                     this,
                     blockPos,
                     this.minecraft.particleEngine)) {
