@@ -1,6 +1,6 @@
 package fuzs.spikyspikes.neoforge.init;
 
-import fuzs.puzzleslib.api.init.v3.registry.RegistryManager;
+import fuzs.puzzleslib.common.api.init.v3.registry.RegistryManager;
 import fuzs.spikyspikes.SpikySpikes;
 import fuzs.spikyspikes.init.ModRegistry;
 import fuzs.spikyspikes.neoforge.world.level.block.NeoForgeSpikeBlock;

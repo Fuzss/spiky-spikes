@@ -1,6 +1,6 @@
 package fuzs.spikyspikes.world.damagesource;
 
-import fuzs.puzzleslib.api.init.v3.registry.LookupHelper;
+import fuzs.puzzleslib.common.api.init.v3.registry.LookupHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;

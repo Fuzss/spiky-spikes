@@ -1,6 +1,6 @@
 package fuzs.spikyspikes.client.renderer.util;
 
-import fuzs.puzzleslib.api.util.v1.CommonHelper;
+import fuzs.puzzleslib.common.api.util.v1.CommonHelper;
 import fuzs.spikyspikes.SpikySpikes;
 import fuzs.spikyspikes.world.level.block.SpikeBlock;
 import net.minecraft.ChatFormatting;

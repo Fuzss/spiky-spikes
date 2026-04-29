@@ -1,7 +1,7 @@
 package fuzs.spikyspikes.data.client;
 
-import fuzs.puzzleslib.api.client.data.v2.AbstractLanguageProvider;
-import fuzs.puzzleslib.api.data.v2.core.DataProviderContext;
+import fuzs.puzzleslib.common.api.client.data.v2.AbstractLanguageProvider;
+import fuzs.puzzleslib.common.api.data.v2.core.DataProviderContext;
 import fuzs.spikyspikes.SpikySpikes;
 import fuzs.spikyspikes.client.renderer.util.SpikeTooltipHelper;
 import fuzs.spikyspikes.init.ModRegistry;

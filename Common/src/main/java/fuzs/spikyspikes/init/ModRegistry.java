@@ -1,9 +1,9 @@
 package fuzs.spikyspikes.init;
 
-import fuzs.puzzleslib.api.data.v2.AbstractDatapackRegistriesProvider;
-import fuzs.puzzleslib.api.init.v3.registry.ContentRegistrationHelper;
-import fuzs.puzzleslib.api.init.v3.registry.RegistryManager;
-import fuzs.puzzleslib.api.init.v3.tags.TagFactory;
+import fuzs.puzzleslib.common.api.data.v2.AbstractDatapackRegistriesProvider;
+import fuzs.puzzleslib.common.api.init.v3.registry.ContentRegistrationHelper;
+import fuzs.puzzleslib.common.api.init.v3.registry.RegistryManager;
+import fuzs.puzzleslib.common.api.init.v3.tags.TagFactory;
 import fuzs.spikyspikes.SpikySpikes;
 import fuzs.spikyspikes.world.item.SpikeItem;
 import fuzs.spikyspikes.world.level.block.SpikeBlock;

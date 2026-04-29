@@ -1,6 +1,6 @@
 package fuzs.spikyspikes.handler;
 
-import fuzs.puzzleslib.api.event.v1.data.MutableInt;
+import fuzs.puzzleslib.common.api.event.v1.data.MutableInt;
 import fuzs.spikyspikes.world.damagesource.SpikeDamageSource;
 import net.minecraft.core.Holder;
 import net.minecraft.world.damagesource.DamageSource;

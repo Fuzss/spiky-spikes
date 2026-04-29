@@ -1,15 +1,16 @@
 package fuzs.spikyspikes.data.client;
 
-import fuzs.puzzleslib.api.client.data.v2.AbstractModelProvider;
-import fuzs.puzzleslib.api.client.data.v2.models.ModelLocationHelper;
-import fuzs.puzzleslib.api.client.data.v2.models.ModelTemplateHelper;
-import fuzs.puzzleslib.api.data.v2.core.DataProviderContext;
+import fuzs.puzzleslib.common.api.client.data.v2.AbstractModelProvider;
+import fuzs.puzzleslib.common.api.client.data.v2.models.ModelLocationHelper;
+import fuzs.puzzleslib.common.api.client.data.v2.models.ModelTemplateHelper;
+import fuzs.puzzleslib.common.api.data.v2.core.DataProviderContext;
 import fuzs.spikyspikes.SpikySpikes;
 import fuzs.spikyspikes.init.ModRegistry;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -42,11 +43,11 @@ public class ModModelProvider extends AbstractModelProvider {
     }
 
     public final void createSpikeBlock(Block spikeBlock, Block textureBlock, BlockModelGenerators blockModelGenerators) {
-        Identifier identifier = ModelLocationHelper.getBlockTexture(textureBlock);
-        this.createSpikeBlock(spikeBlock, identifier, identifier, blockModelGenerators);
+        Material material = ModelLocationHelper.getBlockTexture(textureBlock);
+        this.createSpikeBlock(spikeBlock, material, material, blockModelGenerators);
     }
 
-    public final void createSpikeBlock(Block spikeBlock, Identifier textureLocation, Identifier bottomTextureLocation, BlockModelGenerators blockModelGenerators) {
+    public final void createSpikeBlock(Block spikeBlock, Material textureLocation, Material bottomTextureLocation, BlockModelGenerators blockModelGenerators) {
         TextureMapping textureMapping = new TextureMapping().put(TextureSlot.PARTICLE, textureLocation)
                 .put(TextureSlot.DOWN, bottomTextureLocation)
                 .put(TextureSlot.NORTH, textureLocation)
@@ -57,7 +58,6 @@ public class ModModelProvider extends AbstractModelProvider {
                 textureMapping,
                 blockModelGenerators.modelOutput);
         blockModelGenerators.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(spikeBlock,
-                        BlockModelGenerators.plainVariant(identifier))
-                .with(BlockModelGenerators.ROTATIONS_COLUMN_WITH_FACING));
+                BlockModelGenerators.plainVariant(identifier)).with(BlockModelGenerators.ROTATIONS_COLUMN_WITH_FACING));
     }
 }

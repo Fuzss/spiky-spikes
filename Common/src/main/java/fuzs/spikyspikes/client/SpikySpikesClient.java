@@ -1,8 +1,8 @@
 package fuzs.spikyspikes.client;
 
-import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
-import fuzs.puzzleslib.api.client.core.v1.context.BlockEntityRenderersContext;
-import fuzs.puzzleslib.api.client.gui.v2.tooltip.ItemTooltipRegistry;
+import fuzs.puzzleslib.common.api.client.core.v1.ClientModConstructor;
+import fuzs.puzzleslib.common.api.client.core.v1.context.BlockEntityRenderersContext;
+import fuzs.puzzleslib.common.api.client.gui.v2.tooltip.ItemTooltipRegistry;
 import fuzs.spikyspikes.client.renderer.blockentity.SpikeRenderer;
 import fuzs.spikyspikes.client.renderer.util.SpikeTooltipHelper;
 import fuzs.spikyspikes.init.ModRegistry;

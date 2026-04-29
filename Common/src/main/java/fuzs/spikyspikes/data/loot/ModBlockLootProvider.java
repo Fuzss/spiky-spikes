@@ -1,7 +1,7 @@
 package fuzs.spikyspikes.data.loot;
 
-import fuzs.puzzleslib.api.data.v2.AbstractLootProvider;
-import fuzs.puzzleslib.api.data.v2.core.DataProviderContext;
+import fuzs.puzzleslib.common.api.data.v2.AbstractLootProvider;
+import fuzs.puzzleslib.common.api.data.v2.core.DataProviderContext;
 import fuzs.spikyspikes.init.ModRegistry;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.level.block.Block;

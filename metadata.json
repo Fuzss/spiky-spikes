@@ -1,9 +1,10 @@
 {
+    "minecraft": "26.1.2",
     "mod": {
         "id": "spikyspikes",
         "group": "fuzs.spikyspikes",
         "name": "Spiky Spikes",
-        "version": "21.11.0",
+        "version": "26.1.0",
         "authors": [
             "Fuzs"
         ],
@@ -36,13 +37,13 @@
     ],
     "links": [
         {
-            "name": "github",
-            "slug": "spikyspikes"
-        },
-        {
             "name": "curseforge",
             "slug": "spiky-spikes",
             "id": "666944"
+        },
+        {
+            "name": "github",
+            "slug": "spiky-spikes"
         },
         {
             "name": "modrinth",

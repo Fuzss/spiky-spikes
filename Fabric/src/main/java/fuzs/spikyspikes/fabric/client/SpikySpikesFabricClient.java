@@ -2,16 +2,16 @@ package fuzs.spikyspikes.fabric.client;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
-import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
+import fuzs.puzzleslib.common.api.client.core.v1.ClientModConstructor;
 import fuzs.spikyspikes.SpikySpikes;
 import fuzs.spikyspikes.client.SpikySpikesClient;
 import fuzs.spikyspikes.client.renderer.block.model.SpikeModelGenerator;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.model.loading.v1.UnbakedModelDeserializer;
 import net.fabricmc.fabric.api.client.model.loading.v1.wrapper.WrapperUnbakedModel;
-import net.minecraft.client.renderer.block.model.TextureSlots;
-import net.minecraft.client.resources.model.UnbakedGeometry;
 import net.minecraft.client.resources.model.UnbakedModel;
+import net.minecraft.client.resources.model.geometry.UnbakedGeometry;
+import net.minecraft.client.resources.model.sprite.TextureSlots;
 
 public class SpikySpikesFabricClient implements ClientModInitializer {
 

@@ -1,6 +1,6 @@
 package fuzs.spikyspikes.world.level.block.entity;
 
-import fuzs.puzzleslib.api.init.v3.registry.LookupHelper;
+import fuzs.puzzleslib.common.api.init.v3.registry.LookupHelper;
 import fuzs.spikyspikes.init.ModRegistry;
 import fuzs.spikyspikes.world.damagesource.SpikeDamageSource;
 import net.minecraft.core.BlockPos;

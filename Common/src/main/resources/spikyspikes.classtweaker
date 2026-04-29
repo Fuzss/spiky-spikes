@@ -1,5 +1,8 @@
 classTweaker    v2  official
-accessible  class   net/minecraft/client/renderer/block/model/TextureSlots$Reference
-accessible  class   net/minecraft/client/renderer/block/model/TextureSlots$Value
 accessible  field   net/minecraft/world/phys/shapes/VoxelShape  shape   Lnet/minecraft/world/phys/shapes/DiscreteVoxelShape;
 accessible  method  net/minecraft/world/entity/LivingEntity dropExperience  (Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Entity;)V
+accessible	field	net/minecraft/client/renderer/block/BlockModelRenderState	modelParts	Ljava/util/List;
+accessible	field	net/minecraft/client/renderer/block/BlockModelRenderState	transformation	Lorg/joml/Matrix4fc;
+accessible	field	net/minecraft/client/renderer/block/BlockModelRenderState	renderType	Lnet/minecraft/client/renderer/rendertype/RenderType;
+accessible	field	net/minecraft/client/renderer/block/BlockModelRenderState	tintLayers	Lit/unimi/dsi/fastutil/ints/IntList;
+accessible  method  net/minecraft/client/renderer/feature/BlockFeatureRenderer  putPartQuads    (Lnet/minecraft/client/renderer/block/dispatch/BlockStateModelPart;Lcom/mojang/blaze3d/vertex/PoseStack$Pose;Lcom/mojang/blaze3d/vertex/QuadInstance;[ILcom/mojang/blaze3d/vertex/VertexConsumer;Lcom/mojang/blaze3d/vertex/VertexConsumer;)V

@@ -1,15 +1,24 @@
 package fuzs.spikyspikes.client.renderer.block.model;
 
 import com.mojang.math.Quadrant;
-import fuzs.puzzleslib.api.client.renderer.v1.model.MutableBakedQuad;
+import fuzs.puzzleslib.common.api.client.renderer.v1.model.MutableBakedQuad;
 import fuzs.spikyspikes.SpikySpikes;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.client.model.geom.builders.UVPair;
-import net.minecraft.client.renderer.block.model.*;
+import net.minecraft.client.renderer.block.dispatch.ModelState;
 import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.client.resources.model.*;
+import net.minecraft.client.resources.model.ModelBaker;
+import net.minecraft.client.resources.model.ModelDebugName;
+import net.minecraft.client.resources.model.UnbakedModel;
+import net.minecraft.client.resources.model.cuboid.CuboidFace;
+import net.minecraft.client.resources.model.cuboid.CuboidModelElement;
+import net.minecraft.client.resources.model.cuboid.UnbakedCuboidGeometry;
+import net.minecraft.client.resources.model.geometry.BakedQuad;
+import net.minecraft.client.resources.model.geometry.QuadCollection;
+import net.minecraft.client.resources.model.geometry.UnbakedGeometry;
+import net.minecraft.client.resources.model.sprite.Material;
+import net.minecraft.client.resources.model.sprite.TextureSlots;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
@@ -32,8 +41,8 @@ public class SpikeModelGenerator implements UnbakedModel {
      * The upper face is only removed after baking and will log a missing texture warning if not present.
      */
     public static final TextureSlots.Data TEXTURE_SLOTS = new TextureSlots.Data.Builder().addTexture(Direction.UP.getSerializedName(),
-            new Material(TextureAtlas.LOCATION_BLOCKS, MissingTextureAtlasSprite.getLocation())).build();
-    private static final List<BlockElement> ELEMENTS = Collections.singletonList(createCubeElement());
+            new Material(MissingTextureAtlasSprite.getLocation())).build();
+    private static final List<CuboidModelElement> ELEMENTS = Collections.singletonList(createCubeElement());
 
     @Override
     public TextureSlots.Data textureSlots() {
@@ -45,18 +54,17 @@ public class SpikeModelGenerator implements UnbakedModel {
         return SpikeModelGenerator::bake;
     }
 
-    private static BlockElement createCubeElement() {
-        BlockElementFace.UVs blockFaceUV = new BlockElementFace.UVs(0.0F, 0.0F, 16.0F, 16.0F);
-        Map<Direction, BlockElementFace> map = new EnumMap<>(Direction.class);
+    private static CuboidModelElement createCubeElement() {
+        CuboidFace.UVs blockFaceUV = new CuboidFace.UVs(0.0F, 0.0F, 16.0F, 16.0F);
+        Map<Direction, CuboidFace> map = new EnumMap<>(Direction.class);
         for (Direction direction : Direction.values()) {
-            map.put(direction,
-                    new BlockElementFace(direction, -1, direction.getSerializedName(), blockFaceUV, Quadrant.R0));
+            map.put(direction, new CuboidFace(direction, -1, direction.getSerializedName(), blockFaceUV, Quadrant.R0));
         }
-        return new BlockElement(new Vector3f(0.0F, 0.0F, 0.0F), new Vector3f(16.0F, 16.0F, 16.0F), map);
+        return new CuboidModelElement(new Vector3f(0.0F, 0.0F, 0.0F), new Vector3f(16.0F, 16.0F, 16.0F), map);
     }
 
     public static QuadCollection bake(TextureSlots textureSlots, ModelBaker modelBaker, ModelState modelState, ModelDebugName modelDebugName) {
-        QuadCollection quadCollection = SimpleUnbakedGeometry.bake(ELEMENTS,
+        QuadCollection quadCollection = UnbakedCuboidGeometry.bake(ELEMENTS,
                 textureSlots,
                 modelBaker,
                 modelState,
