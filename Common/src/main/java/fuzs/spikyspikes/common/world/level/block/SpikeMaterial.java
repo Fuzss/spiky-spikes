@@ -4,8 +4,11 @@ import fuzs.spikyspikes.common.SpikySpikes;
 import fuzs.spikyspikes.common.config.ServerConfig;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.Mth;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
+import org.jspecify.annotations.Nullable;
 
 import java.util.function.DoubleSupplier;
 
@@ -34,11 +37,16 @@ public enum SpikeMaterial implements StringRepresentable {
         return (float) this.damageAmount.getAsDouble();
     }
 
-    public Component getDamageComponent() {
+    public @Nullable Component getDamageComponent() {
         float damagedAmount = this.damageAmount();
-        String s = "\u2665".repeat(Math.max(0, Mth.floor(damagedAmount / 2.0F))) +
-                "\u2661".repeat(Math.max(0, Mth.floor(damagedAmount % 2.0F)));
-        return Component.literal(s).withStyle(ChatFormatting.RED);
+        if (damagedAmount > 0.0F) {
+            return Component.translatable("attribute.modifier.plus." + AttributeModifier.Operation.ADD_VALUE.id(),
+                            ItemAttributeModifiers.ATTRIBUTE_MODIFIER_FORMAT.format(damagedAmount),
+                            Component.translatable(Attributes.ATTACK_DAMAGE.value().getDescriptionId()))
+                    .withStyle(ChatFormatting.BLUE);
+        } else {
+            return null;
+        }
     }
 
     public boolean dealsFinalBlow() {

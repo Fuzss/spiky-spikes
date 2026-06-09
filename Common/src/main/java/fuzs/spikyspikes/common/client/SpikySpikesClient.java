@@ -6,7 +6,6 @@ import fuzs.puzzleslib.common.api.client.core.v1.context.BuiltInBlockModelsConte
 import fuzs.puzzleslib.common.api.client.gui.v2.tooltip.ItemTooltipRegistry;
 import fuzs.puzzleslib.common.api.core.v1.ModLoaderEnvironment;
 import fuzs.spikyspikes.common.client.renderer.blockentity.SpikeRenderer;
-import fuzs.spikyspikes.common.client.renderer.util.SpikeTooltipHelper;
 import fuzs.spikyspikes.common.init.ModRegistry;
 import fuzs.spikyspikes.common.world.level.block.SpikeBlock;
 import net.minecraft.client.color.block.BlockColors;
@@ -16,16 +15,29 @@ import net.minecraft.client.renderer.block.dispatch.BlockStateModelPart;
 import net.minecraft.client.renderer.block.model.BlockDisplayContext;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.block.model.BlockStateModelWrapper;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.state.BlockState;
 import org.joml.Matrix4fc;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SpikySpikesClient implements ClientModConstructor {
 
     @Override
     public void onClientSetup() {
-        ItemTooltipRegistry.BLOCK.registerItemTooltipLines(SpikeBlock.class, SpikeTooltipHelper::appendHoverText);
+        ItemTooltipRegistry.BLOCK.registerItemTooltipLines(SpikeBlock.class, (SpikeBlock block) -> {
+            List<Component> tooltipLines = new ArrayList<>();
+            tooltipLines.add(block.getDescriptionComponent());
+            Component component = block.getSpikeMaterial().getDamageComponent();
+            if (component != null) {
+                tooltipLines.add(CommonComponents.EMPTY);
+                tooltipLines.add(component);
+            }
+
+            return tooltipLines;
+        });
     }
 
     @Override

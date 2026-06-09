@@ -307,6 +307,6 @@ public class SpikeBlock extends BaseEntityBlock implements SimpleWaterloggedBloc
     }
 
     public Component getDescriptionComponent() {
-        return Component.translatable(this.getDescriptionId() + ".description").withStyle(ChatFormatting.GRAY);
+        return Component.translatable(this.getDescriptionId() + ".description").withStyle(ChatFormatting.GOLD);
     }
 }

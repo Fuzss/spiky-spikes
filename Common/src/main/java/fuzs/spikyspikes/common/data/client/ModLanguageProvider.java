@@ -3,7 +3,6 @@ package fuzs.spikyspikes.common.data.client;
 import fuzs.puzzleslib.common.api.client.data.v2.AbstractLanguageProvider;
 import fuzs.puzzleslib.common.api.data.v2.core.DataProviderContext;
 import fuzs.spikyspikes.common.SpikySpikes;
-import fuzs.spikyspikes.common.client.renderer.util.SpikeTooltipHelper;
 import fuzs.spikyspikes.common.init.ModRegistry;
 import fuzs.spikyspikes.common.world.level.block.SpikeBlock;
 
@@ -22,9 +21,6 @@ public class ModLanguageProvider extends AbstractLanguageProvider {
         builder.add(ModRegistry.GOLDEN_SPIKE_BLOCK.value(), "Golden Spike");
         builder.add(ModRegistry.DIAMOND_SPIKE_BLOCK.value(), "Diamond Spike");
         builder.add(ModRegistry.NETHERITE_SPIKE_BLOCK.value(), "Netherite Spike");
-        builder.add(SpikeTooltipHelper.TooltipComponent.ADDITIONAL.getTranslationKey(), "Hold %s for more information");
-        builder.add(SpikeTooltipHelper.TooltipComponent.SHIFT.getTranslationKey(), "Shift");
-        builder.add(SpikeTooltipHelper.TooltipComponent.DAMAGE.getTranslationKey(), "Damage: %s");
         builder.add(((SpikeBlock) ModRegistry.WOODEN_SPIKE_BLOCK.value()).getDescriptionComponent(),
                 "Slowly damages mobs, but does not deal a killing blow.");
         builder.add(((SpikeBlock) ModRegistry.STONE_SPIKE_BLOCK.value()).getDescriptionComponent(),
