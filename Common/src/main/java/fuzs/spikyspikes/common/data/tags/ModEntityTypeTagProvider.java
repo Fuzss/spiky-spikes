@@ -15,8 +15,6 @@ public class ModEntityTypeTagProvider extends AbstractTagProvider<EntityType<?>>
 
     @Override
     public void addTags(HolderLookup.Provider provider) {
-        this.tag(ModRegistry.SPIKE_DAMAGE_IMMUNE_ENTITY_TYPE_TAG)
-                .add(EntityType.ARMOR_STAND)
-                .addOptional("betterend:end_fish");
+        this.tag(ModRegistry.SPIKE_DAMAGE_IMMUNE_ENTITY_TYPE_TAG).addOptional("betterend:end_fish");
     }
 }

@@ -17,13 +17,13 @@ public class ModItemTagProvider extends AbstractTagProvider<Item> {
     @Override
     public void addTags(HolderLookup.Provider provider) {
         this.tag(ModRegistry.SPIKES_ITEM_TAG)
-                .add(ModRegistry.WOODEN_SPIKE_ITEM.value(),
-                        ModRegistry.STONE_SPIKE_ITEM.value(),
-                        ModRegistry.IRON_SPIKE_ITEM.value(),
-                        ModRegistry.GOLDEN_SPIKE_ITEM.value())
+                .add(ModRegistry.WOODEN_SPIKE_ITEM,
+                        ModRegistry.STONE_SPIKE_ITEM,
+                        ModRegistry.IRON_SPIKE_ITEM,
+                        ModRegistry.GOLDEN_SPIKE_ITEM)
                 .addTag(ModRegistry.ENCHANTABLE_SPIKES_ITEM_TAG);
         this.tag(ModRegistry.ENCHANTABLE_SPIKES_ITEM_TAG)
-                .add(ModRegistry.DIAMOND_SPIKE_ITEM.value(), ModRegistry.NETHERITE_SPIKE_ITEM.value());
+                .add(ModRegistry.DIAMOND_SPIKE_ITEM, ModRegistry.NETHERITE_SPIKE_ITEM);
         this.tag(ItemTags.SHARP_WEAPON_ENCHANTABLE).addTag(ModRegistry.ENCHANTABLE_SPIKES_ITEM_TAG);
         this.tag(ItemTags.WEAPON_ENCHANTABLE).addTag(ModRegistry.ENCHANTABLE_SPIKES_ITEM_TAG);
         this.tag(ItemTags.MELEE_WEAPON_ENCHANTABLE).addTag(ModRegistry.ENCHANTABLE_SPIKES_ITEM_TAG);

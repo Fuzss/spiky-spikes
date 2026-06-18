@@ -9,13 +9,14 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 public class SpikeDamageSource extends DamageSource {
     private final boolean dropPlayerLoot;
     private final ItemEnchantments itemEnchantments;
 
     private SpikeDamageSource(Holder<DamageType> holder, BlockPos blockPos, boolean dropPlayerLoot, ItemEnchantments itemEnchantments) {
-        super(holder, blockPos.getCenter());
+        super(holder, Vec3.atCenterOf(blockPos));
         this.dropPlayerLoot = dropPlayerLoot;
         this.itemEnchantments = itemEnchantments;
     }
@@ -37,8 +38,9 @@ public class SpikeDamageSource extends DamageSource {
     }
 
     private static DamageSource source(ResourceKey<DamageType> resourceKey, Level level, BlockPos blockPos, boolean dropPlayerLoot, ItemEnchantments itemEnchantments) {
-        return new SpikeDamageSource(LookupHelper.lookup(level, Registries.DAMAGE_TYPE, resourceKey), blockPos,
-                dropPlayerLoot, itemEnchantments
-        );
+        return new SpikeDamageSource(LookupHelper.lookup(level, Registries.DAMAGE_TYPE, resourceKey),
+                blockPos,
+                dropPlayerLoot,
+                itemEnchantments);
     }
 }

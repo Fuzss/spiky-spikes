@@ -7,9 +7,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import fuzs.spikyspikes.common.client.renderer.blockentity.state.SpikeRenderState;
 import fuzs.spikyspikes.common.world.level.block.EnchantmentGlintBlock;
 import fuzs.spikyspikes.common.world.level.block.entity.SpikeBlockEntity;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.OutlineBufferSource;
-import net.minecraft.client.renderer.SubmitNodeCollection;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.block.BlockModelRenderState;
 import net.minecraft.client.renderer.block.BlockModelResolver;
@@ -17,16 +14,20 @@ import net.minecraft.client.renderer.block.dispatch.BlockStateModelPart;
 import net.minecraft.client.renderer.block.model.BlockDisplayContext;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.feature.BlockFeatureRenderer;
+import net.minecraft.client.renderer.feature.BlockModelFeatureRenderer;
+import net.minecraft.client.renderer.feature.FeatureFrameContext;
 import net.minecraft.client.renderer.feature.ItemFeatureRenderer;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.util.LightCoordsUtil;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
+
+import java.util.List;
 
 public class SpikeRenderer implements BlockEntityRenderer<SpikeBlockEntity, SpikeRenderState> {
     public static final BlockDisplayContext BLOCK_DISPLAY_CONTEXT = BlockDisplayContext.create();
@@ -68,7 +69,7 @@ public class SpikeRenderer implements BlockEntityRenderer<SpikeBlockEntity, Spik
                             });
             submitNodeCollector.order(2)
                     .submitCustomGeometry(poseStack,
-                            ItemFeatureRenderer.getFoilRenderType(state.blockModel.renderType, true),
+                            getFoilRenderType(state.blockModel.renderType),
                             (PoseStack.Pose pose, VertexConsumer vertexConsumer) -> {
                                 VertexConsumer buffer = new SheetedDecalTextureGenerator(vertexConsumer,
                                         pose,
@@ -90,9 +91,16 @@ public class SpikeRenderer implements BlockEntityRenderer<SpikeBlockEntity, Spik
     }
 
     /**
+     * @see ItemFeatureRenderer#getFoilBuffer(RenderType, PoseStack.Pose)
+     */
+    public static RenderType getFoilRenderType(RenderType baseRenderType) {
+        return ItemFeatureRenderer.useTransparentGlint(baseRenderType) ? RenderTypes.glintTranslucent() :
+                RenderTypes.glint();
+    }
+
+    /**
      * @see BlockModelRenderState#submitModel(RenderType, PoseStack, SubmitNodeCollector, int, int, int)
-     * @see BlockFeatureRenderer#renderBlockModelSubmits(SubmitNodeCollection, MultiBufferSource.BufferSource,
-     *         OutlineBufferSource, boolean)
+     * @see BlockModelFeatureRenderer#buildGroup(FeatureFrameContext, List)
      */
     private void submitBlockModel(PoseStack.Pose pose, VertexConsumer buffer, BlockModelRenderState blockModel, int lightCoords) {
         if (blockModel.modelParts != null && !blockModel.modelParts.isEmpty()) {
@@ -102,7 +110,7 @@ public class SpikeRenderer implements BlockEntityRenderer<SpikeBlockEntity, Spik
             this.quadInstance.setLightCoords(lightCoords);
             this.quadInstance.setOverlayCoords(OverlayTexture.NO_OVERLAY);
             for (BlockStateModelPart modelPart : blockModel.modelParts) {
-                BlockFeatureRenderer.putPartQuads(modelPart, pose, this.quadInstance, tints, buffer, null);
+                BlockModelFeatureRenderer.putPartQuads(modelPart, pose, this.quadInstance, -1, tints, buffer);
             }
         }
     }

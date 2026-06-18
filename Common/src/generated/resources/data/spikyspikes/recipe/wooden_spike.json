@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "key": {
     "#": "#minecraft:logs_that_burn",
     "S": "minecraft:wooden_sword"

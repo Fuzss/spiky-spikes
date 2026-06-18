@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_transmute",
-  "category": "misc",
   "input": "spikyspikes:diamond_spike",
   "material": "minecraft:netherite_ingot",
   "result": {
