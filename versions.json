@@ -6,11 +6,17 @@
     "26.1.x": "maintained",
     "26.2.x": "primary"
   },
-  "properties": {
-    "distributions.curseforge.id": "666944",
-    "distributions.curseforge.slug": "spiky-spikes",
-    "distributions.github.slug": "spiky-spikes",
-    "distributions.modrinth.id": "DUaLBLVL",
-    "distributions.modrinth.slug": "spiky-spikes"
+  "distributions": {
+    "curseforge": {
+      "id": "666944",
+      "slug": "spiky-spikes"
+    },
+    "github": {
+      "slug": "spiky-spikes"
+    },
+    "modrinth": {
+      "id": "DUaLBLVL",
+      "slug": "spiky-spikes"
+    }
   }
 }
