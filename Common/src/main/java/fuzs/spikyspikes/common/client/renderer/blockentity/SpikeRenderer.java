@@ -62,21 +62,12 @@ public class SpikeRenderer implements BlockEntityRenderer<SpikeBlockEntity, Spik
         if (!state.blockModel.isEmpty() && state.blockModel.renderType != null) {
             submitNodeCollector.order(1)
                     .submitCustomGeometry(poseStack,
-                            state.blockModel.renderType,
+                            getFoilRenderType(state.blockModel.renderType),
                             (PoseStack.Pose pose, VertexConsumer vertexConsumer) -> {
                                 this.submitBlockModel(pose, vertexConsumer, state.blockModel, state.lightCoords);
                             });
-            submitNodeCollector.order(2)
-                    .submitCustomGeometry(poseStack,
-                            getFoilRenderType(state.blockModel.renderType),
-                            (PoseStack.Pose pose, VertexConsumer vertexConsumer) -> {
-                                VertexConsumer buffer = new SheetedDecalTextureGenerator(vertexConsumer,
-                                        pose,
-                                        0.0078125F);
-                                this.submitBlockModel(pose, buffer, state.blockModel, state.lightCoords);
-                            });
             if (state.breakProgress != null) {
-                submitNodeCollector.order(3)
+                submitNodeCollector.order(2)
                         .submitCustomGeometry(poseStack,
                                 ModelBakery.DESTROY_TYPES.get(state.breakProgress.progress()),
                                 (PoseStack.Pose pose, VertexConsumer vertexConsumer) -> {
