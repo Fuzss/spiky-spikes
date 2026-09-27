@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "spikyspikes:wooden_spike"
+        "recipes": "spikyspikes:wooden_spike"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

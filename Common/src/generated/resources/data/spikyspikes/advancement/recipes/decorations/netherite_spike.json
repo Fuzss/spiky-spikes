@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "spikyspikes:netherite_spike"
+        "recipes": "spikyspikes:netherite_spike"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "spikyspikes:iron_spike"
+        "recipes": "spikyspikes:iron_spike"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

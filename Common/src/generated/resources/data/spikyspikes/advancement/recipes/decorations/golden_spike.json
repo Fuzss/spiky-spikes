@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "spikyspikes:golden_spike"
+        "recipes": "spikyspikes:golden_spike"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
