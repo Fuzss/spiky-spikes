@@ -7,7 +7,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import fuzs.spikyspikes.common.client.renderer.blockentity.state.SpikeRenderState;
 import fuzs.spikyspikes.common.world.level.block.EnchantmentGlintBlock;
 import fuzs.spikyspikes.common.world.level.block.entity.SpikeBlockEntity;
-import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.block.BlockModelRenderState;
 import net.minecraft.client.renderer.block.BlockModelResolver;
@@ -17,8 +17,11 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.feature.BlockModelFeatureRenderer;
 import net.minecraft.client.renderer.feature.FeatureFrameContext;
+import net.minecraft.client.renderer.feature.ItemFeatureRenderer;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.rendertype.RenderSetup;
 import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.TextureTransform;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.ModelBakery;
@@ -30,6 +33,14 @@ import java.util.List;
 
 public class SpikeRenderer implements BlockEntityRenderer<SpikeBlockEntity, SpikeRenderState> {
     public static final BlockDisplayContext BLOCK_DISPLAY_CONTEXT = BlockDisplayContext.create();
+    /**
+     * @see net.minecraft.client.renderer.rendertype.RenderTypes#trimmedArmorGlint()
+     */
+    private static final RenderType GLINT = RenderType.create("glint",
+            RenderSetup.builder(RenderPipelines.GLINT)
+                    .withTexture("Sampler0", ItemFeatureRenderer.ENCHANTED_GLINT_ITEM)
+                    .setTextureTransform(TextureTransform.GLINT_TEXTURING)
+                    .createRenderSetup());
 
     private final BlockModelResolver blockModelResolver;
     private final QuadInstance quadInstance = new QuadInstance();
@@ -62,12 +73,21 @@ public class SpikeRenderer implements BlockEntityRenderer<SpikeBlockEntity, Spik
         if (!state.blockModel.isEmpty() && state.blockModel.renderType != null) {
             submitNodeCollector.order(1)
                     .submitCustomGeometry(poseStack,
-                            getFoilRenderType(state.blockModel.renderType),
+                            state.blockModel.renderType,
                             (PoseStack.Pose pose, VertexConsumer vertexConsumer) -> {
                                 this.submitBlockModel(pose, vertexConsumer, state.blockModel, state.lightCoords);
                             });
+            submitNodeCollector.order(2)
+                    .submitCustomGeometry(poseStack,
+                            GLINT,
+                            (PoseStack.Pose pose, VertexConsumer vertexConsumer) -> {
+                                VertexConsumer buffer = new SheetedDecalTextureGenerator(vertexConsumer,
+                                        pose,
+                                        0.0078125F);
+                                this.submitBlockModel(pose, buffer, state.blockModel, state.lightCoords);
+                            });
             if (state.breakProgress != null) {
-                submitNodeCollector.order(2)
+                submitNodeCollector.order(3)
                         .submitCustomGeometry(poseStack,
                                 ModelBakery.DESTROY_TYPES.get(state.breakProgress.progress()),
                                 (PoseStack.Pose pose, VertexConsumer vertexConsumer) -> {
@@ -78,15 +98,6 @@ public class SpikeRenderer implements BlockEntityRenderer<SpikeBlockEntity, Spik
                                 });
             }
         }
-    }
-
-    /**
-     * @see Sheets#cutoutBlockItemGlintSheet()
-     * @see Sheets#translucentBlockItemGlintSheet()
-     */
-    public static RenderType getFoilRenderType(RenderType baseRenderType) {
-        return baseRenderType.hasBlending() ? Sheets.translucentBlockItemGlintSheet() :
-                Sheets.cutoutBlockItemGlintSheet();
     }
 
     /**
