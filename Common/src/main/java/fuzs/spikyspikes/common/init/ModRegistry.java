@@ -1,6 +1,5 @@
 package fuzs.spikyspikes.common.init;
 
-import fuzs.puzzleslib.common.api.data.v2.AbstractDatapackRegistriesProvider;
 import fuzs.puzzleslib.common.api.init.v3.registry.ContentRegistrationHelper;
 import fuzs.puzzleslib.common.api.init.v3.registry.RegistryManager;
 import fuzs.puzzleslib.common.api.init.v3.tags.TagFactory;
@@ -27,6 +26,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 
 import java.util.Set;
 
@@ -61,7 +61,7 @@ public class ModRegistry {
                     ModRegistry::netheriteSpikeProperties);
     public static final Holder.Reference<Item> WOODEN_SPIKE_ITEM = REGISTRIES.registerBlockItem(WOODEN_SPIKE_BLOCK,
             SpikeItem::new,
-            Item.Properties::new);
+            () -> new Item.Properties().cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_BLOCKS));
     public static final Holder.Reference<Item> STONE_SPIKE_ITEM = REGISTRIES.registerBlockItem(STONE_SPIKE_BLOCK,
             SpikeItem::new,
             Item.Properties::new);
@@ -103,7 +103,7 @@ public class ModRegistry {
     }
 
     public static void bootstrapDamageTypes(BootstrapContext<DamageType> context) {
-        AbstractDatapackRegistriesProvider.registerDamageType(context, SPIKE_DAMAGE_TYPE);
+        ContentRegistrationHelper.registerDamageType(context, SPIKE_DAMAGE_TYPE);
     }
 
     public static BlockBehaviour.Properties woodenSpikeProperties() {
@@ -111,7 +111,7 @@ public class ModRegistry {
                 .mapColor(MapColor.WOOD)
                 .strength(2.0F, 3.0F)
                 .sound(SoundType.WOOD)
-                .pushReaction(PushReaction.DESTROY);
+                .pushReaction(PushReaction.POPPED);
     }
 
     public static BlockBehaviour.Properties stoneSpikeProperties() {
@@ -119,7 +119,7 @@ public class ModRegistry {
                 .mapColor(MapColor.STONE)
                 .requiresCorrectToolForDrops()
                 .strength(2.0F, 6.0F)
-                .pushReaction(PushReaction.DESTROY);
+                .pushReaction(PushReaction.POPPED);
     }
 
     public static BlockBehaviour.Properties ironSpikeProperties() {
@@ -128,7 +128,7 @@ public class ModRegistry {
                 .requiresCorrectToolForDrops()
                 .strength(5.0F, 6.0F)
                 .sound(SoundType.METAL)
-                .pushReaction(PushReaction.DESTROY);
+                .pushReaction(PushReaction.POPPED);
     }
 
     public static BlockBehaviour.Properties goldenSpikeProperties() {
@@ -137,7 +137,7 @@ public class ModRegistry {
                 .requiresCorrectToolForDrops()
                 .strength(3.0F, 6.0F)
                 .sound(SoundType.METAL)
-                .pushReaction(PushReaction.DESTROY);
+                .pushReaction(PushReaction.POPPED);
     }
 
     public static BlockBehaviour.Properties diamondSpikeProperties() {
@@ -146,7 +146,7 @@ public class ModRegistry {
                 .requiresCorrectToolForDrops()
                 .strength(5.0F, 6.0F)
                 .sound(SoundType.METAL)
-                .pushReaction(PushReaction.DESTROY);
+                .pushReaction(PushReaction.POPPED);
     }
 
     public static BlockBehaviour.Properties netheriteSpikeProperties() {
@@ -155,6 +155,6 @@ public class ModRegistry {
                 .requiresCorrectToolForDrops()
                 .strength(50.0F, 1200.0F)
                 .sound(SoundType.NETHERITE_BLOCK)
-                .pushReaction(PushReaction.DESTROY);
+                .pushReaction(PushReaction.POPPED);
     }
 }

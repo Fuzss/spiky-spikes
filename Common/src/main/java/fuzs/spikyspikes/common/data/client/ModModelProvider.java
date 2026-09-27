@@ -1,9 +1,9 @@
 package fuzs.spikyspikes.common.data.client;
 
-import fuzs.puzzleslib.common.api.client.data.v2.AbstractModelProvider;
-import fuzs.puzzleslib.common.api.client.data.v2.models.ModelLocationHelper;
-import fuzs.puzzleslib.common.api.client.data.v2.models.ModelTemplateHelper;
-import fuzs.puzzleslib.common.api.data.v2.core.DataProviderContext;
+import fuzs.puzzleslib.common.api.client.data.v3.models.AbstractModelProvider;
+import fuzs.puzzleslib.common.api.client.data.v3.models.ModelLocationHelper;
+import fuzs.puzzleslib.common.api.client.data.v3.models.ModelTemplateHelper;
+import fuzs.puzzleslib.common.api.data.v3.core.DataProviderContext;
 import fuzs.spikyspikes.common.SpikySpikes;
 import fuzs.spikyspikes.common.init.ModRegistry;
 import net.minecraft.client.data.models.BlockModelGenerators;

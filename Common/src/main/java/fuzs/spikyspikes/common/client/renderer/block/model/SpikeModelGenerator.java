@@ -1,7 +1,7 @@
 package fuzs.spikyspikes.common.client.renderer.block.model;
 
 import com.mojang.math.Quadrant;
-import fuzs.puzzleslib.common.api.client.renderer.v1.model.MutableBakedQuad;
+import fuzs.puzzleslib.common.api.client.renderer.v2.model.MutableBakedQuad;
 import fuzs.spikyspikes.common.SpikySpikes;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;

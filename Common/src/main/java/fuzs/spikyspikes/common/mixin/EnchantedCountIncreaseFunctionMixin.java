@@ -8,7 +8,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.EnchantedCountIncreaseFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
+import net.minecraft.world.level.storage.loot.providers.number.floats.ContextFloatProvider;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -24,7 +24,7 @@ abstract class EnchantedCountIncreaseFunctionMixin {
     private Holder<Enchantment> enchantment;
     @Shadow
     @Final
-    private NumberProvider count;
+    private Holder<ContextFloatProvider> count;
     @Shadow
     @Final
     private int limit;
@@ -44,10 +44,10 @@ abstract class EnchantedCountIncreaseFunctionMixin {
         // dispatch this in addition to the other hook, so we do not depend on the attacking entity being a living entity
         // or being present at all (like when damage is coming from a block)
         // no need to cancel, vanilla does nothing but returning the item stack in the case of a non-living attacker
-        if (!(context.getOptionalParameter(LootContextParams.ATTACKING_ENTITY) instanceof LivingEntity)) {
+        if (!(context.getOptional(LootContextParams.ATTACKING_ENTITY) instanceof LivingEntity)) {
             int enchantmentLevel = SpikeLootingHandler.onComputeEnchantedLootBonus(this.enchantment, 0, context);
             if (enchantmentLevel != 0) {
-                float addition = (float) enchantmentLevel * this.count.getFloat(context);
+                float addition = (float) enchantmentLevel * this.count.value().getFloat(context);
                 itemStack.grow(Math.round(addition));
                 if (this.hasLimit()) {
                     itemStack.limitSize(this.limit);

@@ -2,11 +2,9 @@ package fuzs.spikyspikes.common;
 
 import fuzs.puzzleslib.common.api.config.v3.ConfigHolder;
 import fuzs.puzzleslib.common.api.core.v1.ModConstructor;
-import fuzs.puzzleslib.common.api.core.v1.context.GameplayContentContext;
 import fuzs.spikyspikes.common.config.ServerConfig;
 import fuzs.spikyspikes.common.init.ModRegistry;
 import net.minecraft.resources.Identifier;
-import org.apache.commons.lang3.math.Fraction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,11 +18,6 @@ public class SpikySpikes implements ModConstructor {
     @Override
     public void onConstructMod() {
         ModRegistry.bootstrap();
-    }
-
-    @Override
-    public void onRegisterGameplayContent(GameplayContentContext context) {
-        context.registerFuel(ModRegistry.WOODEN_SPIKE_BLOCK, Fraction.getFraction(3, 2));
     }
 
     public static Identifier id(String path) {

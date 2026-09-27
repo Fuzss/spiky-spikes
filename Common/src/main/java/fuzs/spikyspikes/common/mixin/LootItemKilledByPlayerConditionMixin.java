@@ -23,7 +23,7 @@ abstract class LootItemKilledByPlayerConditionMixin {
             at = @At("HEAD"),
             cancellable = true)
     public void test(LootContext context, CallbackInfoReturnable<Boolean> callback) {
-        if (context.getOptionalParameter(LootContextParams.DAMAGE_SOURCE) instanceof SpikeDamageSource spikeDamageSource
+        if (context.getOptional(LootContextParams.DAMAGE_SOURCE) instanceof SpikeDamageSource spikeDamageSource
                 && spikeDamageSource.dropPlayerLoot()) {
             callback.setReturnValue(true);
         }

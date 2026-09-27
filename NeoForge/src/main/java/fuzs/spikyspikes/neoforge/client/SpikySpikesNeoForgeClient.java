@@ -3,7 +3,7 @@ package fuzs.spikyspikes.neoforge.client;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import fuzs.puzzleslib.common.api.client.core.v1.ClientModConstructor;
-import fuzs.puzzleslib.neoforge.api.data.v2.core.DataProviderHelper;
+import fuzs.puzzleslib.neoforge.api.data.v3.core.DataProviderBuilder;
 import fuzs.spikyspikes.common.SpikySpikes;
 import fuzs.spikyspikes.common.client.SpikySpikesClient;
 import fuzs.spikyspikes.common.client.renderer.block.model.SpikeModelGenerator;
@@ -35,7 +35,7 @@ public class SpikySpikesNeoForgeClient {
     public SpikySpikesNeoForgeClient(ModContainer modContainer) {
         ClientModConstructor.construct(SpikySpikes.MOD_ID, SpikySpikesClient::new);
         registerLoadingHandlers(modContainer.getEventBus());
-        DataProviderHelper.registerDataProviders(SpikySpikes.MOD_ID, ModLanguageProvider::new, ModModelProvider::new);
+        DataProviderBuilder.of(SpikySpikes.MOD_ID).addProvider(ModLanguageProvider::new, ModModelProvider::new);
     }
 
     private static void registerLoadingHandlers(IEventBus eventBus) {

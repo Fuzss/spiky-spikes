@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import fuzs.spikyspikes.common.client.renderer.blockentity.state.SpikeRenderState;
 import fuzs.spikyspikes.common.world.level.block.EnchantmentGlintBlock;
 import fuzs.spikyspikes.common.world.level.block.entity.SpikeBlockEntity;
+import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.block.BlockModelRenderState;
 import net.minecraft.client.renderer.block.BlockModelResolver;
@@ -16,10 +17,8 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.feature.BlockModelFeatureRenderer;
 import net.minecraft.client.renderer.feature.FeatureFrameContext;
-import net.minecraft.client.renderer.feature.ItemFeatureRenderer;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.rendertype.RenderType;
-import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.ModelBakery;
@@ -91,11 +90,12 @@ public class SpikeRenderer implements BlockEntityRenderer<SpikeBlockEntity, Spik
     }
 
     /**
-     * @see ItemFeatureRenderer#getFoilBuffer(RenderType, PoseStack.Pose)
+     * @see Sheets#cutoutBlockItemGlintSheet()
+     * @see Sheets#translucentBlockItemGlintSheet()
      */
     public static RenderType getFoilRenderType(RenderType baseRenderType) {
-        return ItemFeatureRenderer.useTransparentGlint(baseRenderType) ? RenderTypes.glintTranslucent() :
-                RenderTypes.glint();
+        return baseRenderType.hasBlending() ? Sheets.translucentBlockItemGlintSheet() :
+                Sheets.cutoutBlockItemGlintSheet();
     }
 
     /**

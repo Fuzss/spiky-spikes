@@ -14,9 +14,9 @@ import org.jspecify.annotations.Nullable;
 public class SpikeLootingHandler {
 
     public static int onComputeEnchantedLootBonus(Holder<Enchantment> enchantment, int enchantmentLevel, LootContext lootContext) {
-        Entity entity = lootContext.getOptionalParameter(LootContextParams.THIS_ENTITY);
+        Entity entity = lootContext.getOptional(LootContextParams.THIS_ENTITY);
         if (!(entity instanceof LivingEntity livingEntity)) return enchantmentLevel;
-        DamageSource damageSource = lootContext.getOptionalParameter(LootContextParams.DAMAGE_SOURCE);
+        DamageSource damageSource = lootContext.getOptional(LootContextParams.DAMAGE_SOURCE);
         return onComputeEnchantedLootBonus(enchantment, enchantmentLevel, livingEntity, damageSource);
     }
 

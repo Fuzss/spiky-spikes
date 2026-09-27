@@ -1,8 +1,6 @@
 package fuzs.spikyspikes.common.world.level.block;
 
 import com.google.common.collect.Maps;
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import fuzs.spikyspikes.common.init.ModRegistry;
 import fuzs.spikyspikes.common.world.damagesource.SpikeDamageSource;
 import fuzs.spikyspikes.common.world.level.block.entity.SpikeBlockEntity;
@@ -46,14 +44,12 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.Map;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
  * Code for facing copied from {@link AmethystClusterBlock}.
  */
 public class SpikeBlock extends BaseEntityBlock implements SimpleWaterloggedBlock, EnchantmentGlintBlock {
-    public static final MapCodec<SpikeBlock> CODEC = spikeCodec(SpikeBlock::new);
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
     public static final BooleanProperty ENCHANTED = BooleanProperty.create("enchanted");
@@ -76,18 +72,6 @@ public class SpikeBlock extends BaseEntityBlock implements SimpleWaterloggedBloc
                 .setValue(WATERLOGGED, Boolean.FALSE)
                 .setValue(FACING, Direction.UP)
                 .setValue(ENCHANTED, Boolean.FALSE));
-    }
-
-    protected static <T extends SpikeBlock> MapCodec<T> spikeCodec(BiFunction<SpikeMaterial, Properties, T> factory) {
-        return RecordCodecBuilder.mapCodec((instance) -> {
-            return instance.group(SpikeMaterial.CODEC.fieldOf("material").forGetter(SpikeBlock::getSpikeMaterial),
-                    propertiesCodec()).apply(instance, factory);
-        });
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
     }
 
     public SpikeMaterial getSpikeMaterial() {
