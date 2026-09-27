@@ -9,9 +9,7 @@ import fuzs.spikyspikes.common.world.level.block.SpikeBlock;
 import fuzs.spikyspikes.common.world.level.block.SpikeMaterial;
 import fuzs.spikyspikes.common.world.level.block.entity.SpikeBlockEntity;
 import net.minecraft.core.Holder;
-import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
@@ -31,9 +29,6 @@ import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntPr
 import java.util.Set;
 
 public class ModRegistry {
-    public static final RegistrySetBuilder REGISTRY_SET_BUILDER = new RegistrySetBuilder().add(Registries.DAMAGE_TYPE,
-            ModRegistry::bootstrapDamageTypes);
-
     static final RegistryManager REGISTRIES = RegistryManager.from(SpikySpikes.MOD_ID);
     public static final Holder.Reference<Block> WOODEN_SPIKE_BLOCK = REGISTRIES.whenOnFabricLike()
             .registerBlock("wooden_spike",
